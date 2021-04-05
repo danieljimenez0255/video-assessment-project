@@ -1,8 +1,17 @@
+import { Button } from "@material-ui/core";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import YouTube from "react-youtube";
 
+/* 
+
+Don't worry about the code changes in here, anything new you see we'll cover tomorrow
+
+
+*/
+
 const VideoAssessment = () => {
-  const [videoId, setVideoId] = useState("wcKvp7txOfY");
+  const [videoStatus, setVideoStatus] = useState(false);
   // manages count
   const [count, setCount] = useState(0);
   const options = {
@@ -12,8 +21,16 @@ const VideoAssessment = () => {
     },
   };
 
+  // this will allow for us to change paths and such
+  const router = useHistory();
+
+  // this will run at end of video and update the video Status state which will undisable the next button
   const nextVideoFunction = () => {
-    //  videoIds array which contains the video ids in an array
+    setVideoStatus(true);
+
+    // Don't worry about the commented out code below
+
+    /* //  videoIds array which contains the video ids in an array
     const videoIds = [
       "acP8Ptv0MXw",
       "YyPtn4UUrj0",
@@ -31,12 +48,21 @@ const VideoAssessment = () => {
     } else {
       setVideoId(videoIds[count]);
     }
-    setCount(count + 1);
+    setCount(count + 1); */
   };
 
   return (
     <div>
-      <YouTube videoId={videoId} opts={options} onEnd={nextVideoFunction} />
+      <YouTube videoId="wcKvp7txOfY" opts={options} onEnd={nextVideoFunction} />
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={() => router.push("/test")}
+        disabled={videoStatus === false}
+      >
+        Go to first assessment
+      </Button>
     </div>
   );
 };
